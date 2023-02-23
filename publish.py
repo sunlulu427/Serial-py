@@ -91,5 +91,5 @@ if __name__ == '__main__':
     # git commit
     if arguments.git_push:
         os.system('git add .')
-        os.system('git commit -m "[Auto]: publish version {version}"')
+        os.system(f'git commit -m "[Auto]: publish version {version}"')
         os.system('git push')
