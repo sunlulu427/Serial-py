@@ -34,8 +34,10 @@ def update_version_in_config_file() -> str:
         # 版本号升级 检查版本号，并+1
         if update_version_type == 'big':
             v1 += 1
+            v2 = v3 = 0
         elif update_version_type == 'middle':
             v2 += 1
+            v3 = 0
         else:
             v3 += 1
         new_version = f'{v1}.{v2}.{v3}'
@@ -63,7 +65,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser('')
     parser.add_argument('--v', type=str, required=False, default='small')
     parser.add_argument('--skip_build', type=bool, required=False, default=False)
-    parser.add_argument('--git_push', type=bool, required=False, default=False)
+    parser.add_argument('--git_push', type=bool, required=False, default=True)
     arguments, _ = parser.parse_known_args(sys.argv)
     update_version_type = arguments.v
     # 读取本地配置文件
