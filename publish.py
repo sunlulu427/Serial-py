@@ -2,6 +2,7 @@
 import argparse
 import configparser
 import os
+import platform
 import re
 import shutil
 import sys
@@ -10,6 +11,7 @@ config_filename = 'pyproject.toml'
 update_version_type = 'small'  # 升级时默认修改小的版本号
 pattern = re.compile(r'version = "(\d+)\.(\d+)\.(\d+)"')
 local_config: configparser.ConfigParser = configparser.ConfigParser()  # 本地配置文件，账号密码
+py_command = 'py' if platform.system() == 'Windows' else 'python3'
 
 
 def read_local_config(config: configparser.ConfigParser):
@@ -47,7 +49,10 @@ def update_version_in_config_file() -> str:
 
 
 def clear():
-    to_delete_dirs = ['build', 'dist', 'pyserial.egg-info']
+    to_delete_dirs = [
+        'build', 'dist',
+        *[d for d in os.listdir('.') if d.endswith('egg-info')]
+    ]
     for to_delete_dir in to_delete_dirs:
         if os.path.exists(to_delete_dir):
             print(f'删除{to_delete_dir}目录')
@@ -73,18 +78,18 @@ if __name__ == '__main__':
     # build
     if not arguments.skip_build:
         print('begin to build =>')
-        os.system('python3 -m build')
+        os.system(f'{py_command} -m build')
 
     # upload
     username = local_config.get('pypi', 'username')
     password = local_config.get('pypi', 'password')
     if username is None or password is None:
-        os.system('python3 -m twine upload dist/*')
+        os.system(f'{py_command} -m twine upload dist/*')
     else:
-        os.system(f'python3 -m twine upload -u {username} -p {password} dist/*')
+        os.system(f'{py_command} -m twine upload -u {username} -p {password} dist/*')
 
     # git commit
     if arguments.git_push:
-        os.system(f'git add .')
-        os.system(f'git commit -m "[Auto]: publish version {version}"')
+        os.system('git add .')
+        os.system('git commit -m "[Auto]: publish version {version}"')
         os.system('git push')

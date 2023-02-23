@@ -10,8 +10,8 @@ exclude = [
 ]
 
 [project]
-name = "pyserial"
-version = "0.0.6"
+name = "tomaserial"
+version = "0.0.10"
 authors = [
     { name = "sunlulu.tomato", email = "sunlulu.tomato@bytedance.com" },
 ]
