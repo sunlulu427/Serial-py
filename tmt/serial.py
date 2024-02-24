@@ -24,7 +24,7 @@ class Converter:
 
     @classmethod
     def is_valid_field(cls, v) -> bool:
-        return cls.is_primitive_type(v) or isinstance(v, (list, dict, Serial, Enum))
+        return cls.is_primitive_type(v) or isinstance(v, (bool, list, dict, Serial, Enum))
 
     @classmethod
     def covert_by_type(cls, v):
@@ -130,6 +130,20 @@ class Serial:
             value = Converter.deserialize_by_type(data[mapped_key], t)
             setattr(instance, k, value)
         return instance
+
+    @classmethod
+    def from_str(cls, json_str: str):
+        try:
+            payload = json.loads(json_str)
+            if isinstance(payload, dict):
+                return cls.from_json(payload)
+            if isinstance(payload, list):
+                return cls.from_list(payload)
+            raise RuntimeError(f'Invalid input: {json_str}')
+        except TypeError as e:
+            raise e
+        except json.JSONDecodeError as e:
+            raise e
 
     @classmethod
     def from_list(cls, li: list):
