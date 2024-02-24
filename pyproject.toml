@@ -6,8 +6,17 @@ build-backend = "hatchling.build"
 exclude = [
     "*/.__pycache/",
     "*/.pytest_cache/",
-    "*/*test.py"
+    "*/*test.py",
+    "publish.py",
+    "Doxyfile",
+    "pyproject.toml",
+    "doxygen_docs",
+    "venv",
+    "test"
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tmt"]
 
 [project]
 name = "tomaserial"

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List
 
-from tmt.serial import Serial
+from src.tmt.serial import Serial
 
 
 class ShaderType(Enum):
