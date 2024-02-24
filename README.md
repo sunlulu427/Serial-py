@@ -2,8 +2,9 @@
 
 这是一个基于`python typing`的反序列化框架，它已经发布到Pypi，因此，你可以通过如下方式依赖它：
 ```shell
-pip3 install 
+pip install tomaserial
 ```
+Pypi主页：[https://pypi.org/project/tomaserial/](https://pypi.org/project/tomaserial/)
 
 ## 数据类定义
 使用时需要将数据按照如下方式定义：这里面包含嵌套类、枚举类

@@ -38,6 +38,6 @@ if __name__ == '__main__':
     username = local_config.get('pypi', 'username')
     password = local_config.get('pypi', 'password')
     if username is None or password is None:
-        os.system('python3 -m twine upload dist/*')
+        os.system('python3 -m twine upload --verbose dist/*')
     else:
-        os.system('python3 -m twine upload -u {username} -p {password} dist/*')
+        os.system('python3 -m twine upload -u {username} -p {password} --verbose dist/*')
